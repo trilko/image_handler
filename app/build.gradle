@@ -20,6 +20,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -66,7 +70,12 @@ dependencies {
     implementation libraries.roomRx
     kapt libraries.roomKapt
 
+    implementation libraries.glide
+    annotationProcessor libraries.glideCompiler
+
     implementation libraries.rxJava
+    implementation libraries.rxAndroid
+    implementation libraries.rxAdapter
 
     implementation libraries.okHttp
     implementation libraries.okHttpLoggingInterceptor
