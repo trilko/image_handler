@@ -1,7 +1,8 @@
-package com.example.image_handler
+package com.example.image_handler.presentation.ui.screen.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.image_handler.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

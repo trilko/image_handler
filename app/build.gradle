@@ -63,9 +63,8 @@ dependencies {
     implementation libraries.retrofitGsonConverter
 
     implementation libraries.room
+    implementation libraries.roomRx
     kapt libraries.roomKapt
-
-    implementation libraries.firebaseCrashlytics
 
     implementation libraries.rxJava
 
