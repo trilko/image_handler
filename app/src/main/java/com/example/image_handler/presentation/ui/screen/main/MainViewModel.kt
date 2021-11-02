@@ -7,6 +7,7 @@ import com.example.image_handler.domain.model.ImageDomain
 import com.example.image_handler.domain.model.SortedOrder
 import com.example.image_handler.domain.model.SortedOrder.*
 import com.example.image_handler.domain.model.mapToUi
+import com.example.image_handler.domain.usecase.ClearCacheUseCase
 import com.example.image_handler.domain.usecase.GetImagesUseCase
 import com.example.image_handler.presentation.model.ErrorUI
 import com.example.image_handler.presentation.model.ImageUI
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getImagesUseCase: GetImagesUseCase
+    private val getImagesUseCase: GetImagesUseCase,
+    private val clearCacheUseCase: ClearCacheUseCase
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -30,12 +32,27 @@ class MainViewModel @Inject constructor(
     private val _liveError = MutableLiveData<ErrorUI>()
     val liveError: LiveData<ErrorUI> = _liveError
 
+    private val _liveMessage = MutableLiveData<String>()
+    val liveMessage: LiveData<String> = _liveMessage
+
     fun getImages(sortedOrder: SortedOrder) {
         val dispose = getImagesUseCase.execute(sortedOrder)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {data -> _liveData.value = data.map { imageDomain -> imageDomain.mapToUi() }},
+                {error -> _liveError.value = error.mapToErrorUI("Something went wrong...")}
+            )
+
+        compositeDisposable.add(dispose)
+    }
+
+    fun clearCache() {
+        val dispose = clearCacheUseCase.execute()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {_liveMessage.value = "Cache cleared success"},
                 {error -> _liveError.value = error.mapToErrorUI("Something went wrong...")}
             )
 

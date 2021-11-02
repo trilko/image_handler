@@ -2,7 +2,6 @@ package com.example.image_handler.presentation.ui.screen.main
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,12 +10,17 @@ import com.bumptech.glide.Glide
 import com.example.image_handler.R
 import com.example.image_handler.presentation.model.ImageUI
 
-class ImageAdapter: RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
+class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
 
     private var list: List<ImageUI> = ArrayList()
 
     fun updateData(list: List<ImageUI>) {
         this.list = list
+        notifyDataSetChanged() // Bad approach, we should use diffUtil instead this. It's just for MVP speed
+    }
+
+    fun clearData() {
+        this.list = emptyList()
         notifyDataSetChanged()
     }
 
@@ -37,6 +41,7 @@ class ImageAdapter: RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
         }
 
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.image_item, parent, false))
 
