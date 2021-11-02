@@ -1,19 +1,17 @@
 package com.example.image_handler.presentation.di
 
-import com.example.image_handler.data.network.ImageApi
+import com.example.image_handler.data.repository.DataSourceRepository
+import com.example.image_handler.domain.repository.Repository
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+abstract class RepositoryModule {
 
-    @Provides
-    @Singleton
-    fun provideImageApi(retrofit: Retrofit): ImageApi = retrofit.create(ImageApi::class.java)
+    @Binds
+    abstract fun provideImageApi(repository: DataSourceRepository): Repository
 
 }

@@ -3,6 +3,7 @@ package com.example.image_handler.presentation.di
 import android.content.Context
 import androidx.room.Room
 import com.example.image_handler.data.db.ImageDatabase
+import com.example.image_handler.data.db.dao.ImageDao
 import com.example.image_handler.utils.DB_NAME
 import dagger.Module
 import dagger.Provides
@@ -18,5 +19,9 @@ object DbModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(context, ImageDatabase::class.java, DB_NAME).build()
+
+    @Provides
+    @Singleton
+    fun provideImageApi(database: ImageDatabase): ImageDao = database.imageDao()
 
 }
