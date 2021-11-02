@@ -1,7 +1,7 @@
 package com.example.image_handler.data.db.dao
 
 import androidx.room.*
-import com.example.image_handler.data.db.entity.Image
+import com.example.image_handler.data.db.entity.ImageEntity
 import io.reactivex.Completable
 import io.reactivex.Single
 
@@ -9,15 +9,12 @@ import io.reactivex.Single
 abstract class ImageDao {
 
     @Query("SELECT * FROM IMAGE")
-    abstract fun getImages(): Single<List<Image>>
+    abstract fun getImages(): Single<List<ImageEntity>>
 
     @Insert
-    abstract fun putImage(image: Image): Completable
+    abstract fun putImages(imageEntities: List<ImageEntity>): Completable
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun updateImage(image: Image): Completable
-
-    @Delete
-    abstract fun deleteImage(image: Image): Completable
+    @Query("DELETE FROM IMAGE" )
+    abstract fun deleteImages(): Completable
 
 }

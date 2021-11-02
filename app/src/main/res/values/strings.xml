@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">image_handler</string>
+    <string name="no_sorted">no sorted</string>
+    <string name="taken_date">taken date</string>
+    <string name="publish_date">publish date</string>
+    <string name="image">image</string>
 </resources>
