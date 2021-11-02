@@ -27,8 +27,8 @@ class DataSourceRepository @Inject constructor(
     private fun getFromNetworkIfCacheIsEmpty(cachedImages: List<ImageEntity>): Single<List<ImageDomain>> {
         return if (cachedImages.isEmpty()) {
             network.getImagesApi()
-                .map { it.mapToDomain()}
-                .doOnSuccess { data -> saveImages(data) }
+                .map { it.mapToDomain() }
+                .doOnSuccess { data -> saveImages(data).subscribe() }
         } else {
             Single.just(cachedImages.map { image -> image.mapToDomain() })
         }
